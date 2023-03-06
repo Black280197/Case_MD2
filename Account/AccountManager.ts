@@ -1,8 +1,11 @@
 // @ts-ignore
 let readlineSync = require('readline-sync');
+// @ts-ignore
+let clear = require('clear');
 
 import {Account} from "./Account";
-
+import {EmployeeManager} from "../Employee/EmployeeManager";
+import {main} from "../main";
 
 
 export class AccountManager {
@@ -53,21 +56,6 @@ export class AccountManager {
         this.login();
     }
 
-    main() {
-        console.log(`               
-                -----Menu-----
-    
-              1. Thêm nhân viên
-              2. Tìm kiếm nhân viên
-              3. Kiểm tra trạng thái nhân viên
-              4. Sửa thông tin nhân viên
-              5. Thay đổi trạng thái của nhân viên
-              6. Thông tin tài khoản
-              7. Đăng xuất
-    `)
-
-    }
-
     login() {
         console.log(`-----Login-----`)
             var userName: string = readlineSync.question('UserName: ');
@@ -102,7 +90,7 @@ export class AccountManager {
             var password: string = readlineSync.question('Password: ');
             if (this.accounts[index].password === password) {
                 console.log(`Xin chào ${userName}!`);
-                this.main();
+                main();
                 break;
             } else {
                 console.log(`Mật khẩu không đúng !`);

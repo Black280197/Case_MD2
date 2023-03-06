@@ -1,7 +1,7 @@
 type parttime = {salery: number, hour: number};
-type fulltime = {salery: number, overtime: number};
+type fulltime = {salery: number, hour: number};
 
-interface type {
+export type type = {
     type: string;
     parttime: parttime;
     fulltime: fulltime;
