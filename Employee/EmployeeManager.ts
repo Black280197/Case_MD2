@@ -48,9 +48,9 @@ export class EmployeeManager {
 
     }
 
-    delete(name: string): void {
+    /*delete(name: string): void {
         this.employees.splice(this.findIndex(name), 1);
-    }
+    }*/
 
     listWithStatus(): list {
         let l: list = {on:[], off:[]};

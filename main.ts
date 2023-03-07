@@ -2,6 +2,10 @@
 let readlineSync = require('readline-sync');
 // @ts-ignore
 let clear = require('clear');
+// @ts-ignore
+export const fs = require('fs');
+export let dataEmployee: EmployeeManager;
+export let dataAccount: AccountManager;
 
 import {AccountManager} from "./Account/AccountManager";
 import {EmployeeManager} from "./Employee/EmployeeManager";
@@ -49,6 +53,15 @@ export function main() {
             }
         } while (true)
     }
+
+export function readingEmployee() {
+    try {
+        const data = fs.readFileSync('./dataEmployee', 'utf8');
+        dataEmployee = JSON.parse(data);
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 let accountManager: AccountManager = new AccountManager();
 let employeeManager: EmployeeManager = new EmployeeManager();
