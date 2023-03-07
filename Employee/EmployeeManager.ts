@@ -25,8 +25,27 @@ export class EmployeeManager {
         return -1;
     }
 
-    checkStatus(name: string): boolean {
-        return this.employees[this.findIndex(name)].status;
+    checkStatus(): void {
+        clear();
+        let name: string = readlineSync.question('Check by name: ');
+        let i: number = this.findIndex(name);
+        if (i === -1) {
+            console.log(`Tên nhân viên không tồn tại !
+            `)
+            let z = readlineSync.question('Press Enter to return !');
+            main();
+        } else if (this.employees[i].status) {
+                clear();
+                console.log(`Nhân viên ${name} đang làm việc !`)
+                let z = readlineSync.question('Press Enter to return !');
+                main();
+            } else {
+            clear();
+            console.log(`Nhân viên ${name} đã nghỉ việc !`)
+            let z = readlineSync.question('Press Enter to return !');
+            main();
+        }
+
     }
 
     delete(name: string): void {
@@ -46,8 +65,8 @@ export class EmployeeManager {
         clear();
         var typeOfStaff: type = {
             type: "",
-            parttime: {salery: 0, hour: 0},
-            fulltime: {salery: 0, hour: 0},
+            parttime: {salary: 0, hour: 0},
+            fulltime: {salary: 0, hour: 0},
         };
         let name: string = readlineSync.question(`Employee's name: `);
         let email: string = readlineSync.question(`Email: `);
@@ -85,16 +104,16 @@ export class EmployeeManager {
             switch (i) {
                 case 1:
                     typeOfStaff.type = "parttime";
-                    typeOfStaff.parttime.salery = +readlineSync.question('Salery: ');
+                    typeOfStaff.parttime.salary = +readlineSync.question('Salary: ');
                     typeOfStaff.parttime.hour = 0;
-                    typeOfStaff.fulltime.salery = -1;
+                    typeOfStaff.fulltime.salary = -1;
                     typeOfStaff.fulltime.hour = -1;
                     break;
                 case 2:
                     typeOfStaff.type = "fulltime";
-                    typeOfStaff.fulltime.salery = +readlineSync.question('Salery: ');
+                    typeOfStaff.fulltime.salary = +readlineSync.question('Salary: ');
                     typeOfStaff.fulltime.hour = 0;
-                    typeOfStaff.parttime.salery = -1;
+                    typeOfStaff.parttime.salary = -1;
                     typeOfStaff.parttime.hour = -1;
                     break;
                 default:
@@ -113,7 +132,7 @@ export class EmployeeManager {
 
     searchEmployee(): void {
         clear();
-        let name = readlineSync.question('Search by name: ')
+        let name: string = readlineSync.question('Search by name: ')
         let i = this.findIndex(name);
         if (i === -1) {
             console.log(`Tên nhân viên không tồn tại`);
@@ -129,7 +148,7 @@ export class EmployeeManager {
             phoneNumber: ${this.employees[i].phoneNumber};
             Status: ${this.employees[i].status};
             Type: ${this.employees[i].typeOfStaff.type};
-            Salery: ${(this.employees[i].typeOfStaff.type === "fulltime") ? this.employees[i].typeOfStaff.fulltime.salery : this.employees[i].typeOfStaff.parttime.salery};
+            Salary: ${(this.employees[i].typeOfStaff.type === "fulltime") ? this.employees[i].typeOfStaff.fulltime.salary : this.employees[i].typeOfStaff.parttime.salary};
             ${(this.employees[i].typeOfStaff.type === "fulltime") ? "Overtime hours: " : "Working hours: "}` +
             `${(this.employees[i].typeOfStaff.type === "fulltime") ? this.employees[i].typeOfStaff.fulltime.hour : this.employees[i].typeOfStaff.parttime.hour};
             `)
@@ -138,12 +157,134 @@ export class EmployeeManager {
         }
     }
 
-    // updateEmployee(index: number,title: string, content: any): void {
-    //     if (this.employees.length > 0)
-    //     this.employees[index][title] = content;
-    // }
-    //
-    // updateEmployeeStatus(index: number): void {
-    //     this.employees[index]["status"] = !this.employees[index]["status"];
-    // }
+    updateEmployeeInfor(): void {
+        clear();
+        let name = readlineSync.question(`Employee's name: `);
+        let i: number = this.findIndex(name);
+        if (i === -1) {
+            console.log('Tên nhân viên không tồn tại !');
+            let z = readlineSync.question('Press Enter to return !');
+            main();
+        } else {
+            console.log(`
+            -----Update-----
+            !!!Chọn nội dung mà bạn muốn cập nhật!!!
+            1. Name
+            2. Email
+            3. Birthday
+            4. PhoneNumber
+            5. Type
+            7. Salary
+            8. Working(Overtime) hours
+            0. Trở lại
+            `)
+            do {
+                let c: number = +readlineSync.question('Your choice: ');
+                switch (c) {
+                    case 1:
+                        this.changeInfoString('name', i);
+                        break;
+                    case 2:
+                        this.changeInfoString('email', i);
+                        break;
+                    case 3:
+                        this.changeInfoString('birthday', i);
+                        break;
+                    case 4:
+                        this.changeInfoString('phoneNumber', i);
+                        break;
+                    case 5:
+                        this.changeInfoString('type', i);
+                        break;
+                    case 6:
+                        this.changeInfoString('salary', i);
+                        break;
+                    case 7:
+                        this.changeInfoString('hour', i);
+                        break;
+                    case 8:
+                        this.changeInfoString('email', i);
+                        break;
+                    case 0:
+                        main();
+                        break;
+                    default:
+                        console.log('Lựa chọn không hợp lệ !')
+                        break;
+                }
+            } while (true);
+        }
+    }
+
+    changeInfoString(title: string, index: number): void {
+        clear();
+        let content: string = readlineSync.question(`New ${title}: `);
+        switch (title) {
+            case 'name':
+                this.employees[index].name = content;
+                break;
+            case 'email':
+                this.employees[index].email = content;
+                break;
+            case 'birthday':
+                this.employees[index].birthday = content;
+                break;
+            case 'phoneNumber':
+                this.employees[index].phoneNumber = content;
+                break;
+            case 'type':
+                this.employees[index].typeOfStaff.type = content;
+                console.log(`Hãy cập nhật lại lương và giờ làm(giờ làm thêm) của nhân viên !`);
+                switch (content) {
+                    case 'parttime':
+                        let value1: number = readlineSync.question('Salary: ');
+                        this.employees[index].typeOfStaff.parttime.salary = value1;
+                        value1 = readlineSync.question('Hour: ');
+                        this.employees[index].typeOfStaff.parttime.hour = value1;
+                        break;
+                    case 'fulltime':
+                        let value2: number = readlineSync.question('Salary: ');
+                        this.employees[index].typeOfStaff.fulltime.salary = value2;
+                        value2 = readlineSync.question('Hour: ');
+                        this.employees[index].typeOfStaff.fulltime.hour = value2;
+                        break;
+                }
+                break;
+            case 'salary':
+                switch (this.employees[index].typeOfStaff.type) {
+                    case 'parttime':
+                        let value1: number = +content;
+                        this.employees[index].typeOfStaff.parttime.salary = value1;
+                        break;
+                    case 'fulltime':
+                        let value2: number = +content;
+                        this.employees[index].typeOfStaff.fulltime.salary = value2;
+                        break;
+                }
+            case 'hour':
+                switch (this.employees[index].typeOfStaff.type) {
+                    case 'parttime':
+                        let value1: number = +content;
+                        this.employees[index].typeOfStaff.parttime.hour = value1;
+                        break;
+                    case 'fulltime':
+                        let value2: number = +content;
+                        this.employees[index].typeOfStaff.fulltime.hour = value2;
+                        break;
+                }
+
+        }
+        console.log(`Đã cập nhật ${title} thành công !`)
+        let z = readlineSync.question('Press Enter to return !')
+        main();
+    }
+
+    updateEmployeeStatus(): void {
+        let name: string = readlineSync.question(`Employee's name: `);
+        let index: number = this.findIndex(name);
+        this.employees[index]["status"] = !this.employees[index]["status"];
+        console.log(`Đã thay đổi trạng thái của nhân viên`);
+        let z = readlineSync.question('Press Enter to return !');
+        main();
+    }
 }

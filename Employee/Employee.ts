@@ -1,5 +1,5 @@
-type parttime = {salery: number, hour: number};
-type fulltime = {salery: number, hour: number};
+type parttime = {salary: number, hour: number};
+type fulltime = {salary: number, hour: number};
 
 export type type = {
     type: string;

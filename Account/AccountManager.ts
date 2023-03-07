@@ -2,6 +2,7 @@
 let readlineSync = require('readline-sync');
 // @ts-ignore
 let clear = require('clear');
+let id: number;
 
 import {Account} from "./Account";
 import {EmployeeManager} from "../Employee/EmployeeManager";
@@ -25,8 +26,15 @@ export class AccountManager {
         this.accounts.splice(this.findIndex(userName), 1);
     }
 
-     showAccount(userName: string): void {
-         console.log(this.accounts[this.findIndex(userName)]);
+     showAccount(): void {
+        clear();
+         console.log(`
+         -----In4 of this account-----
+         UserName: ${this.accounts[id].userName}
+         Password: ${this.accounts[id].password}
+         `)
+         let z = readlineSync.question('Press Enter to return !');
+         main();
      }
 
      add(userName: string, password: string): void {
@@ -62,6 +70,7 @@ export class AccountManager {
         console.log(`-----Login-----`)
             var userName: string = readlineSync.question('UserName: ');
             var index: number = this.findIndex(userName);
+            id = index;
             if (index === -1) {
                 console.log("UserName không tồn tại");
                 console.log(`Bạn có muốn đăng ký tài khoản mới không ?

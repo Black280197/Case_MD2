@@ -19,8 +19,9 @@ export function main() {
               6. Thông tin tài khoản
               7. Đăng xuất
     `)
+    do {
         let i = +readlineSync.question('Your choice: ');
-        do {
+
             switch (i) {
                 case 1:
                     employeeManager.add();
@@ -28,6 +29,23 @@ export function main() {
                 case 2:
                     employeeManager.searchEmployee();
                     break;
+                case 3:
+                    employeeManager.checkStatus();
+                    break;
+                case 4:
+                    employeeManager.updateEmployeeInfor();
+                    break;
+                case 5:
+                    employeeManager.updateEmployeeStatus();
+                    break;
+                case 6:
+                    accountManager.showAccount();
+                    break;
+                case 7:
+                    accountManager.welcome();
+                    break;
+                default:
+                    console.log(`Lựa chọn không hợp lệ !`)
             }
         } while (true)
     }
