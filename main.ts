@@ -7,6 +7,7 @@ import {AccountManager} from "./Account/AccountManager";
 import {EmployeeManager} from "./Employee/EmployeeManager";
 
 export function main() {
+    clear();
         console.log(`               
                 -----Menu-----
     
@@ -18,14 +19,15 @@ export function main() {
               6. Thông tin tài khoản
               7. Đăng xuất
     `)
-        let i = readlineSync.question('Your choice: ');
+        let i = +readlineSync.question('Your choice: ');
         do {
             switch (i) {
                 case 1:
-                    employeeManager.add()
+                    employeeManager.add();
                     break;
                 case 2:
-
+                    employeeManager.searchEmployee();
+                    break;
             }
         } while (true)
     }

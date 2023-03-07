@@ -35,6 +35,7 @@ export class AccountManager {
      }
 
     signUp(): void {
+        clear();
         console.log(`-----Sign up-----`)
         do {
             var userName: string = readlineSync.question('Enter UserName: ');
@@ -57,6 +58,7 @@ export class AccountManager {
     }
 
     login() {
+        clear();
         console.log(`-----Login-----`)
             var userName: string = readlineSync.question('UserName: ');
             var index: number = this.findIndex(userName);
@@ -121,6 +123,7 @@ export class AccountManager {
 
 
     welcome() {
+        clear();
         console.log(`-----Welcome-----
     1. Đăng nhập
     2. Đăng ký

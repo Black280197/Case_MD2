@@ -1,7 +1,8 @@
 import {Employee} from "./Employee";
 // @ts-ignore
 let readlineSync = require('readline-sync');
-let clear
+// @ts-ignore
+let clear = require('clear');
 
 import {type} from "./Employee";
 import {main} from "../main";
@@ -42,6 +43,7 @@ export class EmployeeManager {
     }
 
     add(): void {
+        clear();
         var typeOfStaff: type = {
             type: "",
             parttime: {salery: 0, hour: 0},
@@ -110,17 +112,38 @@ export class EmployeeManager {
     }
 
     searchEmployee(): void {
+        clear();
         let name = readlineSync.question('Search by name: ')
         let i = this.findIndex(name);
-        console.log(``)
+        if (i === -1) {
+            console.log(`Tên nhân viên không tồn tại`);
+            let z = readlineSync.question('Press Enter to return !');
+            main();
+        } else {
+            clear();
+            console.log(`
+            -----Search by name-----
+            Name: ${this.employees[i].name};
+            Email: ${this.employees[i].email};
+            Birthday: ${this.employees[i].birthday};
+            phoneNumber: ${this.employees[i].phoneNumber};
+            Status: ${this.employees[i].status};
+            Type: ${this.employees[i].typeOfStaff.type};
+            Salery: ${(this.employees[i].typeOfStaff.type === "fulltime") ? this.employees[i].typeOfStaff.fulltime.salery : this.employees[i].typeOfStaff.parttime.salery};
+            ${(this.employees[i].typeOfStaff.type === "fulltime") ? "Overtime hours: " : "Working hours: "}` +
+            `${(this.employees[i].typeOfStaff.type === "fulltime") ? this.employees[i].typeOfStaff.fulltime.hour : this.employees[i].typeOfStaff.parttime.hour};
+            `)
+            let z = readlineSync.question('Press Enter to return !');
+            main();
+        }
     }
 
-//     updateEmployee(index: number,title: string, content: number | string): void {
-//         let e: Employee = this.employees[index];
-//         e[title] = content;
-//     }
-//
-//     updateEmployeeStatus(index: number): void {
-//         this.employees[index]["status"] = !this.employees[index]["status"];
-//     }
+    // updateEmployee(index: number,title: string, content: any): void {
+    //     if (this.employees.length > 0)
+    //     this.employees[index][title] = content;
+    // }
+    //
+    // updateEmployeeStatus(index: number): void {
+    //     this.employees[index]["status"] = !this.employees[index]["status"];
+    // }
 }
